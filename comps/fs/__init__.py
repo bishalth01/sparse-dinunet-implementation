@@ -48,6 +48,16 @@ class FreeSurferTrainer(COINNTrainer):
         self.nn['fs_net'] = MSANNet(in_size=self.cache['input_size'],
                                     hidden_sizes=self.cache['hidden_sizes'], out_size=self.cache['num_class'])
 
+    def single_iteration_for_masking(self, model, batch):
+        sparsity_level = 0.85
+        inputs, labels = batch['inputs'].to(self.device['gpu']).float(), batch['labels'].to(self.device['gpu']).long()
+        indices = batch['ix'].to(self.device['gpu']).long()
+        model.zero_grad()
+        out = F.log_softmax(model.forward(inputs), 1)
+        loss = F.nll_loss(out, labels)
+        return {'out': out, 'loss': loss, 'indices': indices, 'sparsity_level': sparsity_level}
+
+
     def iteration(self, batch):
         inputs, labels = batch['inputs'].to(self.device['gpu']).float(), batch['labels'].to(self.device['gpu']).long()
         indices = batch['ix'].to(self.device['gpu']).long()
@@ -63,15 +73,6 @@ class FreeSurferTrainer(COINNTrainer):
         return {'out': out, 'loss': loss, 'averages': val, 'metrics': score, 'prediction': predicted,
                 'indices': indices}
 
-    def single_iteration_for_masking(self, model, batch):
-        sparsity_level = 0.85
-        inputs, labels = batch['inputs'].to(self.device['gpu']).float(), batch['labels'].to(self.device['gpu']).long()
-        indices = batch['ix'].to(self.device['gpu']).long()
-
-        model.zero_grad()
-        out = F.log_softmax(model.forward(inputs), 1)
-        loss = F.nll_loss(out, labels)
-        return {'out': out, 'loss': loss, 'indices': indices, 'sparsity_level': sparsity_level}
 
 
 class FSVDataHandle(COINNDataHandle):

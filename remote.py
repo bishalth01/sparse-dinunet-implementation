@@ -4,7 +4,7 @@ import time
 from coinstac_sparse_dinunet import COINNRemote
 from coinstac_sparse_dinunet.utils import duration
 
-from comps import NNComputation, FreeSurferTrainer, ICATrainer
+from comps import NNComputation, FreeSurferTrainer
 
 CACHE = {}
 MP_POOL = None
@@ -27,9 +27,6 @@ def run(data):
     """Add new NN computation Here"""
     if remote.cache['task_id'] == NNComputation.TASK_FREE_SURFER:
         args = FreeSurferTrainer,
-
-    elif remote.cache['task_id'] == NNComputation.TASK_ICA:
-        args = ICATrainer,
 
     else:
         raise ValueError(f"Invalid remote task:{remote.cache.get('task')}")

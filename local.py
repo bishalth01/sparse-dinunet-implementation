@@ -6,7 +6,6 @@ from coinstac_sparse_dinunet.utils import duration
 
 from comps import AggEngine
 from comps import NNComputation, FreeSurferDataset, FreeSurferTrainer, FSVDataHandle
-from comps import ICATrainer, ICADataset, ICADataHandle
 
 """ Test """
 computation = NNComputation.TASK_FREE_SURFER
@@ -33,15 +32,12 @@ def run(data):
         cache=CACHE, input=data['input'], batch_size=16,
         state=data['state'], epochs=21, patience=31, split_ratio=[0.7, 0.15, 0.15],
         pretrain_args=None, dataloader_args=dataloader_args,
-        num_class=2, monitor_metric='auc', log_header="loss|auc"
+        num_class=2, monitor_metric='auc', log_header="loss|auc", sparse_training=True
     )
 
     """Add new NN computation Here"""
     if local.cache['task_id'] == NNComputation.TASK_FREE_SURFER:
         args = FreeSurferTrainer, FreeSurferDataset, FSVDataHandle
-
-    elif local.cache['task_id'] == NNComputation.TASK_ICA:
-        args = ICATrainer, ICADataset, ICADataHandle
 
     else:
         raise ValueError(f"Invalid local task:{local.cache.get('task')}")
