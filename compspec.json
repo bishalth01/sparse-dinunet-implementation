@@ -1,9 +1,9 @@
 {
   "meta": {
-    "name": "Decentralized Deep Artificial Neural Networks in COINSTAC (CPU capability only)",
-    "id": "coinstac-sparse-dinunet",
+    "name": "Decentralized Sparse Deep Artificial Neural Networks in COINSTAC",
+    "id": "coinstac-dinunet",
     "version": "v2.0.1",
-    "repository": "https:\/\/github.com\/trendscenter\/dinunet_implementations.git",
+    "repository": "https:\/\/github.com\/bishalth01\/sparse_dinunet_implementations",
     "description": "NN implementations in COINSTAC for task that can be run in CPU only. Please use GPU version for GPU acceleration.",
     "compspecVersion": 2
   },
@@ -21,6 +21,16 @@
       ]
     },
     "input": {
+      "covariates": {
+        "label": "Covariates",
+        "type": "csv",
+        "items": [
+          "boolean",
+          "number"
+        ],
+        "source": "member",
+        "order": 1
+      },
       "data": {
         "label": "Data",
         "type": "files",
@@ -30,9 +40,7 @@
         "extensions": [
           "csv",
           "txt",
-          "npy",
-          "npz",
-          "json"
+          "h5"
         ],
         "source": "member",
         "order": 2
@@ -40,7 +48,8 @@
       "task_id": {
         "default": "FS-Classification",
         "values": [
-          "FS-Classification"
+          "FS-Classification",
+          "ICA-Classification"
         ],
         "label": "Pick a NN task:",
         "type": "select",
@@ -63,7 +72,8 @@
       "agg_engine": {
         "default": "dSGD",
         "values": [
-          "dSGD"
+          "dSGD",
+          "rankDAD"
         ],
         "label": "Pick aggregation engine:",
         "type": "select",
@@ -77,11 +87,11 @@
       },
       "num_reducers": {
         "default": 2,
-        "label": "Number of local reducers:",
+        "label": "Number of reducers in the aggregator(Depends on number of sites):",
         "type": "number",
         "source": "owner",
         "group": "NN Params",
-        "order": 8
+        "order": 6
       },
       "batch_size": {
         "default": 16,
@@ -89,7 +99,7 @@
         "type": "number",
         "source": "owner",
         "group": "NN Params",
-        "order": 9
+        "order": 7
       },
       "local_iterations": {
         "default": 1,
@@ -97,7 +107,7 @@
         "type": "number",
         "source": "owner",
         "group": "NN Params",
-        "order": 10
+        "order": 8
       },
       "learning_rate": {
         "default": 0.001,
@@ -109,10 +119,10 @@
           "value": "train"
         },
         "group": "NN Params",
-        "order": 11
+        "order": 9
       },
       "epochs": {
-        "default": 51,
+        "default": 101,
         "label": "Epochs:",
         "type": "number",
         "source": "owner",
@@ -121,7 +131,7 @@
           "value": "train"
         },
         "group": "NN Params",
-        "order": 12
+        "order": 10
       },
       "pretrain": {
         "default": false,
@@ -129,7 +139,7 @@
         "type": "boolean",
         "source": "owner",
         "group": "NN Params",
-        "order": 13
+        "order": 11
       },
       "pretrain_args": {
         "default": {
@@ -150,7 +160,7 @@
           "value": true
         },
         "group": "NN Params",
-        "order": 14
+        "order": 12
       },
       "validation_epochs": {
         "default": 1,
@@ -162,7 +172,7 @@
           "value": "train"
         },
         "group": "NN Params",
-        "order": 15
+        "order": 13
       },
       "precision_bits": {
         "default": "32",
@@ -178,7 +188,7 @@
           "value": "train"
         },
         "group": "NN Params",
-        "order": 16
+        "order": 14
       },
       "pin_memory": {
         "default": false,
@@ -186,7 +196,7 @@
         "type": "boolean",
         "source": "member",
         "group": "NN Params",
-        "order": 18
+        "order": 15
       },
       "num_workers": {
         "default": 0,
@@ -194,10 +204,10 @@
         "type": "number",
         "source": "member",
         "group": "NN Params",
-        "order": 19
+        "order": 16
       },
       "patience": {
-        "default": 51,
+        "default": 35,
         "label": "Early stopping patience epochs:",
         "type": "number",
         "source": "owner",
@@ -206,13 +216,13 @@
           "value": "train"
         },
         "group": "NN Params",
-        "order": 20
+        "order": 17
       },
       "split_ratio": {
         "default": [
-          0.7,
-          0.15,
-          0.15
+          0.8,
+          0.1,
+          0.1
         ],
         "label": "Data split ratio for train, validation, test in the same order:",
         "type": "object",
@@ -221,7 +231,7 @@
         "order": 21
       },
       "num_folds": {
-        "default": 0,
+        "default": null,
         "label": "Number of folds for K-Fold Cross Validation(Mutually exclusive with split ratio):",
         "type": "number",
         "source": "owner",
@@ -230,6 +240,7 @@
       },
       "FS-Classification_args": {
         "default": {
+          "labels_column": "isControl",
           "input_size": 66,
           "hidden_sizes": [
             256,
@@ -238,9 +249,9 @@
             32
           ],
           "num_class": 2,
-          "monitor_metric": "auc",
-          "metric_direction": "maximize",
-          "log_header": "Loss|AUC",
+          "dad_reduction_rank": 10,
+          "dad_num_pow_iters": 5,
+          "dad_tol": 0.001,
           "split_files": []
         },
         "label": "FreeSurfer classification parameters.",
@@ -253,27 +264,11 @@
         },
         "order": 23
       },
-      "FS-Classification_data_conf": {
-        "default": {
-          "labels_file": "covariates.csv",
-          "data_column": "freesurferfile",
-          "labels_column": "isControl"
-        },
-        "label": "FreeSurfer classification data config.",
-        "type": "object",
-        "source": "member",
-        "group": "Computation",
-        "conditional": {
-          "variable": "task_id",
-          "value": "FS-Classification"
-        },
-        "order": 24
-      }
-    },
     "output": {
     },
     "display": {
       "type": "string"
     }
   }
+}
 }

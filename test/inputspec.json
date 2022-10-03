@@ -1,8 +1,19 @@
 [
   {
-     "labels_file": {
+     "covariates": {
       "value": "site1_Covariate.csv"
     },
+    "data":{
+        "fulfilled":true,
+        "value":[
+           {
+              "type":"FreeSurfer",
+              "value":[
+                 "5th-Ventricle"
+              ]
+           }
+        ]
+      },
     "data_column": {
       "value": "freesurferfile"
     },
@@ -34,12 +45,27 @@
     },
     "learning_rate": {
       "value": 0.001
+    },
+    "lambda":{
+        "fulfilled":true,
+        "value":1
     }
   },
   {
-    "labels_file": {
+    "covariates": {
       "value": "site2_Covariate.csv"
     },
+    "data":{
+        "fulfilled":true,
+        "value":[
+           {
+              "type":"FreeSurfer",
+              "value":[
+                 "5th-Ventricle"
+              ]
+           }
+        ]
+      },
      "data_column": {
       "value": "freesurferfile"
     },
@@ -71,12 +97,27 @@
     },
     "learning_rate": {
       "value": 0.001
+    },
+    "lambda":{
+        "fulfilled":true,
+        "value":1
     }
   },
   {
-    "labels_file": {
+    "covariates": {
       "value": "site3_Covariate.csv"
     },
+    "data":{
+        "fulfilled":true,
+        "value":[
+           {
+              "type":"FreeSurfer",
+              "value":[
+                 "5th-Ventricle"
+              ]
+           }
+        ]
+      },
     "data_column": {
       "value": "freesurferfile"
     },
@@ -108,12 +149,27 @@
     },
     "learning_rate": {
       "value": 0.001
+    },
+    "lambda":{
+        "fulfilled":true,
+        "value":1
     }
   },
   {
-    "labels_file": {
+    "covariates": {
       "value": "site4_Covariate.csv"
     },
+    "data":{
+        "fulfilled":true,
+        "value":[
+           {
+              "type":"FreeSurfer",
+              "value":[
+                 "5th-Ventricle"
+              ]
+           }
+        ]
+    },
      "data_column": {
       "value": "freesurferfile"
     },
@@ -145,11 +201,26 @@
     },
     "learning_rate": {
       "value": 0.001
+    },
+    "lambda":{
+        "fulfilled":true,
+        "value":1
     }
   },
   {
-    "labels_file": {
+    "covariates": {
       "value": "site5_Covariate.csv"
+    },
+    "data":{
+        "fulfilled":true,
+        "value":[
+           {
+              "type":"FreeSurfer",
+              "value":[
+                 "5th-Ventricle"
+              ]
+           }
+        ]
     },
      "data_column": {
       "value": "freesurferfile"
@@ -182,6 +253,10 @@
     },
     "learning_rate": {
       "value": 0.001
+    },
+    "lambda":{
+        "fulfilled":true,
+        "value":1
     }
   }
 ]
