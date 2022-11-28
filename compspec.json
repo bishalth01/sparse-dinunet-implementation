@@ -1,7 +1,7 @@
 {
   "meta": {
     "name": "Decentralized Sparse Deep Artificial Neural Networks in COINSTAC",
-    "id": "coinstac-dinunet",
+    "id": "coinstac-sparse-dinunet",
     "version": "v2.0.1",
     "repository": "https:\/\/github.com\/bishalth01\/sparse_dinunet_implementations",
     "description": "NN implementations in COINSTAC for task that can be run in CPU only. Please use GPU version for GPU acceleration.",
