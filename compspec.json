@@ -2,20 +2,20 @@
   "meta": {
     "name": "Decentralized Sparse Deep Artificial Neural Networks in COINSTAC",
     "id": "coinstac-sparse-dinunet",
-    "version": "v2.0.1",
+    "version": "v2.0.2",
     "repository": "https:\/\/github.com\/bishalth01\/sparse_dinunet_implementations",
     "description": "NN implementations in COINSTAC for task that can be run in CPU only. Please use GPU version for GPU acceleration.",
     "compspecVersion": 2
   },
   "computation": {
     "type": "docker",
-    "dockerImage": "coinstacteam/coinstac-sparse-dinunet",
+    "dockerImage": "coinstac-sparse-dinunet",
     "command": [
       "python"
     ],
     "remote": {
       "type": "docker",
-      "dockerImage": "coinstacteam/coinstac-sparse-dinunet",
+      "dockerImage": "coinstac-sparse-dinunet",
       "command": [
         "python"
       ]
@@ -46,10 +46,11 @@
         "order": 2
       },
       "task_id": {
-        "default": "FS-Classification",
+        "default": "CIFAR10-Classification",
         "values": [
           "FS-Classification",
-          "ICA-Classification"
+          "ICA-Classification",
+          "CIFAR10-Classification"
         ],
         "label": "Pick a NN task:",
         "type": "select",
@@ -86,20 +87,12 @@
         "order": 5
       },
       "num_reducers": {
-        "default": 2,
+        "default": 5,
         "label": "Number of reducers in the aggregator(Depends on number of sites):",
         "type": "number",
         "source": "owner",
         "group": "NN Params",
         "order": 6
-      },
-      "batch_size": {
-        "default": 16,
-        "label": "Batch size:",
-        "type": "number",
-        "source": "owner",
-        "group": "NN Params",
-        "order": 7
       },
       "local_iterations": {
         "default": 1,
@@ -121,8 +114,20 @@
         "group": "NN Params",
         "order": 9
       },
+      "batch_size": {
+        "default": 0.001,
+        "label": "Learning rate:",
+        "type": "number",
+        "source": "owner",
+        "conditional": {
+          "variable": "mode",
+          "value": "train"
+        },
+        "group": "NN Params",
+        "order": 7
+      },
       "epochs": {
-        "default": 101,
+        "default": 1,
         "label": "Epochs:",
         "type": "number",
         "source": "owner",
@@ -132,35 +137,6 @@
         },
         "group": "NN Params",
         "order": 10
-      },
-      "pretrain": {
-        "default": false,
-        "label": "Use the site with maximum data to pre-train locally as starting point:",
-        "type": "boolean",
-        "source": "owner",
-        "group": "NN Params",
-        "order": 11
-      },
-      "pretrain_args": {
-        "default": {
-          "epochs": 0,
-          "learning_rate": 0.001,
-          "batch_size": 16,
-          "local_iterations": 1,
-          "validation_epochs": 1,
-          "pin_memory": false,
-          "num_workers": 0,
-          "patience": 51
-        },
-        "label": "Pretraining arguments:",
-        "type": "object",
-        "source": "owner",
-        "conditional": {
-          "variable": "pretrain",
-          "value": true
-        },
-        "group": "NN Params",
-        "order": 12
       },
       "validation_epochs": {
         "default": 1,
@@ -220,9 +196,9 @@
       },
       "split_ratio": {
         "default": [
-          0.8,
-          0.1,
-          0.1
+          0.7,
+          0.15,
+          0.15
         ],
         "label": "Data split ratio for train, validation, test in the same order:",
         "type": "object",
@@ -238,37 +214,42 @@
         "group": "NN Params",
         "order": 22
       },
-      "FS-Classification_args": {
+      "resnetmodel": {
+      "type": "string",
+      "default": "resnet20"
+    },
+      "CIFAR10-Classification-args": {
         "default": {
           "labels_column": "isControl",
-          "input_size": 66,
+          "input_size": 32,
           "hidden_sizes": [
             256,
             128,
             64,
             32
           ],
-          "num_class": 2,
+          "num_class": 10,
           "dad_reduction_rank": 10,
           "dad_num_pow_iters": 5,
           "dad_tol": 0.001,
           "split_files": []
         },
-        "label": "FreeSurfer classification parameters.",
+        "label": "CIFAR10 classification parameters.",
         "type": "object",
         "source": "owner",
         "group": "Computation",
         "conditional": {
           "variable": "task_id",
-          "value": "FS-Classification"
+          "value": "CIFAR10-Classification"
         },
         "order": 23
-      },
+      }},
     "output": {
     },
     "display": {
-      "type": "string"
-    }
+        "type": "string"
+      }
+   
   }
 }
-}
+

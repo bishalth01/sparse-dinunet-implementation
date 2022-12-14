@@ -6,9 +6,10 @@ from coinstac_sparse_dinunet.utils import duration
 
 from comps import AggEngine
 from comps import NNComputation, FreeSurferDataset, FreeSurferTrainer, FSVDataHandle
+from comps import NNComputation, CIFAR10Dataset, CIFAR10Trainer, CIFAR10DataHandle
 
 """ Test """
-computation = NNComputation.TASK_FREE_SURFER
+computation = NNComputation.TASK_CIFAR10
 agg_engine = AggEngine.DECENTRALIZED_SGD
 
 CACHE = {}
@@ -29,15 +30,18 @@ def run(data):
 
     local = COINNLocal(
         task_id=computation, agg_engine=agg_engine,
-        cache=CACHE, input=data['input'], batch_size=16,
-        state=data['state'], epochs=21, patience=31, split_ratio=[0.7, 0.15, 0.15],
+        cache=CACHE, input=data['input'], batch_size=data['batch_size'],
+        state=data['state'], epochs=data['epochs'], patience=data['patience'], split_ratio=data['split_ratio'],
         pretrain_args=None, dataloader_args=dataloader_args,
-        num_class=2, monitor_metric='auc', log_header="loss|auc", sparse_training=True
+        num_class=10, monitor_metric='accuracy', log_header="loss|accuracy", sparse_training=True
     )
 
     """Add new NN computation Here"""
     if local.cache['task_id'] == NNComputation.TASK_FREE_SURFER:
         args = FreeSurferTrainer, FreeSurferDataset, FSVDataHandle
+
+    elif local.cache['task_id'] == NNComputation.TASK_CIFAR10:
+        args = CIFAR10Trainer, CIFAR10Dataset, CIFAR10DataHandle
 
     else:
         raise ValueError(f"Invalid local task:{local.cache.get('task')}")
