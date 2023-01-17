@@ -1,3 +1,5 @@
+scikit-learn
 torch==1.9.0
+torchvision
 coinstac>=0.3.1
-coinstac-sparse-dinunet~=2.0.1
+coinstac-sparse-dinunet==2.0.2
