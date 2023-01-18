@@ -1,28 +1,41 @@
 [
   {
      "covariates": {
-      "value": "site1_Covariate.csv"
+      "value": "site0_covariates.csv"
     },
     "data":{
         "fulfilled":true,
         "value":[
            {
-              "type":"FreeSurfer",
+              "type":"CIFAR10",
               "value":[
-                 "5th-Ventricle"
+                 "vals"
               ]
            }
         ]
       },
     "data_column": {
-      "value": "freesurferfile"
+      "value": "filename"
     },
     "labels_column": {
-      "value": "isControl"
+      "value": "label"
     },
     "mode": {
       "value": "train"
     },
+    "batch_size": {
+      "value": 128
+    },
+    "epochs": {
+      "value": 5
+    },
+    "patience": {
+      "value": 35
+    },
+    "split_ratio": {
+      "value": [0.75,0.15,0.15]
+    },
+
     "gpus": {
       "value": []
     },
@@ -38,7 +51,7 @@
       ]
     },
     "num_class": {
-      "value": 2
+      "value": 10
     },
     "num_workers": {
       "value": 2
@@ -49,214 +62,9 @@
     "lambda":{
         "fulfilled":true,
         "value":1
+    },
+  "resnetmodel": {
+      "value": "resnet20"
     }
-  },
-  {
-    "covariates": {
-      "value": "site2_Covariate.csv"
-    },
-    "data":{
-        "fulfilled":true,
-        "value":[
-           {
-              "type":"FreeSurfer",
-              "value":[
-                 "5th-Ventricle"
-              ]
-           }
-        ]
-      },
-     "data_column": {
-      "value": "freesurferfile"
-    },
-    "labels_column": {
-      "value": "isControl"
-    },
-    "mode": {
-      "value": "train"
-    },
-    "gpus": {
-      "value": []
-    },
-    "input_size": {
-      "value": 66
-    },
-    "hidden_sizes": {
-      "value": [
-        256,
-        128,
-        64,
-        32
-      ]
-    },
-    "num_class": {
-      "value": 2
-    },
-    "num_workers": {
-      "value": 2
-    },
-    "learning_rate": {
-      "value": 0.001
-    },
-    "lambda":{
-        "fulfilled":true,
-        "value":1
-    }
-  },
-  {
-    "covariates": {
-      "value": "site3_Covariate.csv"
-    },
-    "data":{
-        "fulfilled":true,
-        "value":[
-           {
-              "type":"FreeSurfer",
-              "value":[
-                 "5th-Ventricle"
-              ]
-           }
-        ]
-      },
-    "data_column": {
-      "value": "freesurferfile"
-    },
-    "labels_column": {
-      "value": "isControl"
-    },
-    "mode": {
-      "value": "train"
-    },
-    "gpus": {
-      "value": []
-    },
-    "input_size": {
-      "value": 66
-    },
-    "hidden_sizes": {
-      "value": [
-        256,
-        128,
-        64,
-        32
-      ]
-    },
-    "num_class": {
-      "value": 2
-    },
-    "num_workers": {
-      "value": 2
-    },
-    "learning_rate": {
-      "value": 0.001
-    },
-    "lambda":{
-        "fulfilled":true,
-        "value":1
-    }
-  },
-  {
-    "covariates": {
-      "value": "site4_Covariate.csv"
-    },
-    "data":{
-        "fulfilled":true,
-        "value":[
-           {
-              "type":"FreeSurfer",
-              "value":[
-                 "5th-Ventricle"
-              ]
-           }
-        ]
-    },
-     "data_column": {
-      "value": "freesurferfile"
-    },
-    "labels_column": {
-      "value": "isControl"
-    },
-    "mode": {
-      "value": "train"
-    },
-    "gpus": {
-      "value": []
-    },
-    "input_size": {
-      "value": 66
-    },
-    "hidden_sizes": {
-      "value": [
-        256,
-        128,
-        64,
-        32
-      ]
-    },
-    "num_class": {
-      "value": 2
-    },
-    "num_workers": {
-      "value": 2
-    },
-    "learning_rate": {
-      "value": 0.001
-    },
-    "lambda":{
-        "fulfilled":true,
-        "value":1
-    }
-  },
-  {
-    "covariates": {
-      "value": "site5_Covariate.csv"
-    },
-    "data":{
-        "fulfilled":true,
-        "value":[
-           {
-              "type":"FreeSurfer",
-              "value":[
-                 "5th-Ventricle"
-              ]
-           }
-        ]
-    },
-     "data_column": {
-      "value": "freesurferfile"
-    },
-    "labels_column": {
-      "value": "isControl"
-    },
-    "mode": {
-      "value": "train"
-    },
-    "gpus": {
-      "value": []
-    },
-    "input_size": {
-      "value": 66
-    },
-    "hidden_sizes": {
-      "value": [
-        256,
-        128,
-        64,
-        32
-      ]
-    },
-    "num_class": {
-      "value": 2
-    },
-    "num_workers": {
-      "value": 2
-    },
-    "learning_rate": {
-      "value": 0.001
-    },
-    "lambda":{
-        "fulfilled":true,
-        "value":1
-    }
-  }
-]
+ 
+  }]
