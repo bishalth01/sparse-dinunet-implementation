@@ -115,8 +115,8 @@
         "order": 9
       },
       "batch_size": {
-        "default": 0.001,
-        "label": "Learning rate:",
+        "default": 128,
+        "label": "Batch Size:",
         "type": "number",
         "source": "owner",
         "conditional": {
