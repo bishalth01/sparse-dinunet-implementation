@@ -30,8 +30,8 @@ def run(data):
 
     local = COINNLocal(
         task_id=computation, agg_engine=agg_engine,
-        cache=CACHE, input=data['input'], batch_size=data['batch_size'],
-        state=data['state'], epochs=data['epochs'], patience=data['patience'], split_ratio=data['split_ratio'],
+        cache=CACHE, input=data['input'], batch_size=data['input']['batch_size'],
+        state=data['state'], epochs=data['input']['epochs'], patience=data['input']['patience'], split_ratio=data['input']['split_ratio'],
         pretrain_args=None, dataloader_args=dataloader_args,
         num_class=10, monitor_metric='accuracy', log_header="loss|accuracy", sparse_training=True
     )
