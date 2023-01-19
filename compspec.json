@@ -119,10 +119,6 @@
         "label": "Batch Size:",
         "type": "number",
         "source": "owner",
-        "conditional": {
-          "variable": "mode",
-          "value": "train"
-        },
         "group": "NN Params",
         "order": 7
       },
