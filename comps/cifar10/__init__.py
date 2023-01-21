@@ -1,3 +1,4 @@
+import json
 import os
 import pandas as pd
 import torch
@@ -24,6 +25,17 @@ cifar10Labels = {
 }
 
 
+def flatten(d):
+    ret = dict()
+    for k, v in d.items():
+        if isinstance(v, dict):
+            sub = flatten(v)
+            for kk, vv in sub.items():
+                ret[kk] = vv[0]['labels']
+        else:
+            ret[k] = v[0]['labels']
+    return ret
+
 class CIFAR10Dataset(COINNDataset):
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -32,7 +44,11 @@ class CIFAR10Dataset(COINNDataset):
     def load_index(self, file):
 
         if self.labels is None:
-            self.labels = pd.read_csv(self.state['baseDirectory'] + os.sep + self.cache["covariates"])
+            #self.labels = pd.read_csv(self.state['baseDirectory'] + os.sep + self.cache["covariates"])
+            # json_dict = json.loads((self.cache['covariates']))
+            # self.labels = pd.DataFrame.from_dict(json_dict)['labels']
+            self.labels = pd.DataFrame(flatten(self.cache['covariates']).items(), columns=['cifar10_file_name', 'labels'])
+
             if self.cache.get('data_column') in self.labels.columns:
                 self.labels = self.labels.set_index(self.cache['data_column'])
 
@@ -48,7 +64,7 @@ class CIFAR10Dataset(COINNDataset):
 
     def __getitem__(self, ix):
         file, y = self.indices[ix]
-        y = self.labels.iloc[ix, :]["label"]
+        y = self.labels.iloc[ix, :]["labels"]
         y = cifar10Labels.get(y)
         x = torchvision.io.read_image(self.path() + self.labels.iloc[ix, :]["cifar10_file_name"])
         # df = pd.read_csv(self.path() + os.sep + file, sep='\t', names=['File', file], skiprows=1)
@@ -95,8 +111,11 @@ class CIFAR10Trainer(COINNTrainer):
 
 
 class CIFAR10DataHandle(COINNDataHandle):
+
     def list_files(self):
-        df = pd.read_csv(self.state['baseDirectory'] + os.sep + self.cache["covariates"])
+        #df = pd.read_csv(self.state['baseDirectory'] + os.sep + self.cache["covariates"])
+        #json_dict = json.loads((self.cache['covariates']))
+        df = pd.DataFrame(flatten(self.cache['covariates']).items(), columns=['cifar10_file_name', 'labels'])
         if self.cache.get('data_column') in df.columns:
             df = df.set_index(self.cache['data_column'])
         return list(df.index)
