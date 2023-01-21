@@ -21,17 +21,18 @@
       ]
     },
     "input": {
-      "covariates": {
+	   "covariates": {
         "label": "Covariates",
         "type": "csv",
         "items": [
           "boolean",
           "number",
-          "string"
+		  "string"
         ],
         "source": "member",
         "order": 1
       },
+
       "data": {
         "label": "Data",
         "type": "files",
@@ -95,6 +96,7 @@
         "group": "NN Params",
         "order": 6
       },
+
       "local_iterations": {
         "default": 1,
         "label": "Local gradient accumulation iterations(effective batch size = batch size * gradient accumulation iterations)",
@@ -217,7 +219,9 @@
     },
       "CIFAR10-Classification-args": {
         "default": {
-          "labels_column": "isControl",
+		  "labels_files": "site0_covariates.csv",
+          "data_column": "cifar10_file_name",
+          "labels_column": "labels",
           "input_size": 32,
           "hidden_sizes": [
             256,
@@ -240,6 +244,22 @@
           "value": "CIFAR10-Classification"
         },
         "order": 23
+      },
+	      "CIFAR10-Classification_data_conf": {
+        "default": {
+          "covariates": "site0_covariates.csv",
+          "data_column": "cifar10_file_name",
+          "labels_column": "labels"
+        },
+        "label": "FreeSurfer classification data config.",
+        "type": "object",
+        "source": "member",
+        "group": "Computation",
+        "conditional": {
+          "variable": "task_id",
+          "value": "FS-Classification"
+        },
+        "order": 24
       }},
     "output": {
     },
