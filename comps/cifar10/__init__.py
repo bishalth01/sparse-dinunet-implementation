@@ -31,9 +31,9 @@ def flatten(d):
         if isinstance(v, dict):
             sub = flatten(v)
             for kk, vv in sub.items():
-                ret[kk] = vv[0]['labels']
+                ret[kk] = vv['labels']
         else:
-            ret[k] = v[0]['labels']
+            ret[k] = v['labels']
     return ret
 
 class CIFAR10Dataset(COINNDataset):
