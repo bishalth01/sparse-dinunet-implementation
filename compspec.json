@@ -9,13 +9,13 @@
   },
   "computation": {
     "type": "docker",
-    "dockerImage": "coinstacteam/coinstac-sparse-dinunet",
+    "dockerImage": "002552435/coinstac-sparse-dinunet",
     "command": [
       "python"
     ],
     "remote": {
       "type": "docker",
-      "dockerImage": "coinstacteam/coinstac-sparse-dinunet",
+      "dockerImage": "002552435/coinstac-sparse-dinunet",
       "command": [
         "python"
       ]
