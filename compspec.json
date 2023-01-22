@@ -247,7 +247,6 @@
       },
 	      "CIFAR10-Classification_data_conf": {
         "default": {
-          "covariates": "site0_covariates.csv",
           "data_column": "cifar10_file_name",
           "labels_column": "labels"
         },
