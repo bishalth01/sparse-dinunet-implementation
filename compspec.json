@@ -220,7 +220,7 @@
       "CIFAR10-Classification-args": {
         "default": {
 		  "labels_files": "site0_covariates.csv",
-          "data_column": "cifar10_file_name",
+          "data_column": "cifar10_file_name_old",
           "labels_column": "labels",
           "input_size": 32,
           "hidden_sizes": [
@@ -247,7 +247,7 @@
       },
 	      "CIFAR10-Classification_data_conf": {
         "default": {
-          "data_column": "cifar10_file_name",
+          "data_column": "cifar10_file_name_old",
           "labels_column": "labels"
         },
         "label": "FreeSurfer classification data config.",
